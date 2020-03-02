@@ -15,9 +15,10 @@ pipeline {
                     customWorkspace "${workspace}"   //指定运行工作目录（可选）
             }
     }
-    tools {
-        maven 'm2'
-    }
+// 没有用 未知？
+//    tools {
+//        maven 'm2'
+//    }
 
     options {
         timestamps()  //日志会打印有时间
@@ -66,7 +67,8 @@ pipeline {
                 //代码扫描
                 stage("CodeScan"){
                     steps{
-                        sh 'mvn --version'
+                        //无法直接在steps当中使用sh命令。
+                        //sh 'mvn --version'
                         timeout(time:30, unit:"MINUTES"){
                             script{
                                 print("代码扫描")
