@@ -41,6 +41,17 @@ pipeline {
                         input id: 'Check your Process ! ', message: '是继续构建？', ok: '是，继续！', parameters: [choice(choices: ['True', 'False'], description: '', name: 'This is a example of input choose')], submitter: 'kid,admin'
                         
                         input id: 'Input Test', message: 'Check U input ', ok: 'button01', parameters: [choice(choices: ['True', 'False', 'Unknown'], description: '测试 input 功能', name: 'T or F')], submitter: 'kid,admin'
+                        
+
+                        input {
+                              message 'message01'
+                              id 'ID01'
+                              ok 'yes or no'
+                              submitter 'admin,kid'
+                                  parameters {
+                                      choice choices: ['A', 'B', 'C'], description: '测试申明样式的input', name: 'choose one'
+                                             }
+                                }
                     }
                 }
             }
