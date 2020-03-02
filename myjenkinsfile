@@ -92,18 +92,21 @@ pipeline {
         success {
             script{
                 currentBuild.description = "\n 构建成功!" 
+                tools.PrintMes("构建成功",'green')
             }
         }
 
         failure {
             script{
                 currentBuild.description = "\n 构建失败!" 
+                tools.PrintMes("构建失败",'red')
             }
         }
 
         aborted {
             script{
                 currentBuild.description = "\n 构建取消!" 
+                tools.PrintMes("构建取消",'blue')
             }
         }
     }
