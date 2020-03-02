@@ -39,6 +39,8 @@ pipeline {
                         println("${test}")//打印出环境变量$test
                         
                         input id: 'Check your Process ! ', message: '是继续构建？', ok: '是，继续！', parameters: [choice(choices: ['True', 'False'], description: '', name: 'This is a example of input choose')], submitter: 'kid,admin'
+                        
+                        input id: 'Input Test', message: 'Check U input ', ok: 'button01', parameters: [choice(choices: ['True', 'False'], description: '测试 input 功能', name: 'T or F')], submitter: 'kid,admin'
                     }
                 }
             }
