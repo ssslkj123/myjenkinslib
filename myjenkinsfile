@@ -50,14 +50,14 @@ pipeline {
 				}
 			}
 		}
-		stage("Gradle_version_show"){
-			steps{
-				script{
-					gradleHome = tool "GRADLE"
-					sh "${gradleHome/bin/gradle -v}";
-				}
-			}
-		}
+		//stage("Gradle_version_show"){
+		//	steps{
+		//		script{
+		//			gradleHome = tool "GRADLE"
+		//			sh "${gradleHome/bin/gradle -v}";
+		//		}
+		//	}
+		//}
 
         //下载代码
         //stage("GetCode"){ //阶段名称
