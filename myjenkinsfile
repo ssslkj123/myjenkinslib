@@ -61,7 +61,7 @@ pipeline {
 
         //下载代码
         stage("GetCode"){ //阶段名称
-            //when { environment name: 'test', value: 'abcd' }   //该段会去进行判断，如果判断没有该环境变量过那么stage("GetCode")则不会执行。
+           when { environment name: 'test', value: 'abcd' }   //该段会去进行判断，如果判断没有该环境变量过那么stage("GetCode")则不会执行。
            input {
                  message 'aaa'
                     id 'stg_input'
