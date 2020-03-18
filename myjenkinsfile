@@ -6,7 +6,7 @@ def tools = new org.devops.tools()
 String workspace = "/opt/jenkins/workspace"
 String mvnParams = "${env.mvnParams}"  //通过env的方式获取参数并引用 mvnParams 来自于 当前pipeline 的参数化构建选项。 
 String antParams = "${env.antParams}"  //通过当前jenkins的env方式获取ant命令的可选参数。
-
+String npmParams = "${env.npmParams}"  //进行读取并选择环境变量当中npm命令行参数。
 //Pipeline
 pipeline {
     environment{
@@ -63,7 +63,8 @@ pipeline {
 			steps{
 				script{
 					npmHome = tool "NPM"
-					sh "${npmHome}/bin/npm -v";
+					sh "${npmHome}/bin/npm ${npmParams}";
+					sh "${npmHome}/bin/node -v";
 				}
 			}
 		}
