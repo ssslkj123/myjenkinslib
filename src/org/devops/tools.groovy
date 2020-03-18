@@ -1,4 +1,4 @@
-//package org.devops
+
 //打印内容
 //def PrintMes(content)
 //{
@@ -6,6 +6,8 @@
 //}
 
 package org.devops
+//改行指定该groovy文件脚本的从src目录下至该文件所在目录的相对位置。
+
 
 //格式化输出
 def PrintMes(value,color){
