@@ -12,7 +12,7 @@ def  Build(buildType,buildShell){
   buildHome = tool buildTools[buildType];
   //定义一个buildHome 通过字典的形式将方法的buildType字段传入到字典buildTools当中，并将值赋值给buildHome变量.
   
-  if (${buildTools} == npm ){
+  if (${buildType} == npm ){
 	  sh "export PATH=\$PATH:${buildHome}/bin && ${buildHome}/bin/${buildType} ${buildShell}";
 	  //由于npm构建工具环境变量的问题，所以在此作一个判断.
   }
