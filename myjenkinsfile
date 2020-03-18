@@ -59,6 +59,14 @@ pipeline {
 				}
 			}
 		}
+		stage("Npm_version_show"){
+			steps{
+				script{
+					npmHome = tool "NPM"
+					sh "${npmHome}/bin/npm -v";
+				}
+			}
+		}
 
         //下载代码
         stage("GetCode"){ //阶段名称
