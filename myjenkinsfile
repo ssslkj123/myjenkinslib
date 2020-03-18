@@ -3,6 +3,8 @@
 @Library('myjenkinslib') _
 
 def tools = new org.devops.tools()
+//tools工具获取方法的相对路径是在当前src目录下的org/devops/下的tools.groovy文件. 
+
 String workspace = "/opt/jenkins/workspace"
 String mvnParams = "${env.mvnParams}"  //通过env的方式获取参数并引用 mvnParams 来自于 当前pipeline 的参数化构建选项。 
 String antParams = "${env.antParams}"  //通过当前jenkins的env方式获取ant命令的可选参数。
