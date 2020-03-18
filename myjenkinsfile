@@ -36,23 +36,24 @@ pipeline {
     }
 
     stages {
-	//用于校验当前阶段的各种构建工具版本示例
-	stage("Maven_version_show"){
-		steps{
-			// sh "mvn -v"
-			sh "mvn ${mvnParams}";
-		}
-	}
-	   
-	stage("Build"){
+	stage("Build_various_Tools"){
 		steps{
 			script{
 			build.Build(buildType,buildShell);
 			//引用全局已经实例化过的build 并调用Build方法，传入参数来自于全局env.buildType与build.Shell.
+				}
 			}
 		}
+	    
+	
+	//用于校验当前阶段的各种构建工具版本示例
+	stage("Maven_version_show"){
+		steps{
+			//sh "mvn -v"
+			sh "mvn ${mvnParams}";
+		}
 	}
-	   
+   
 	stage("Ant_version_show"){
 		steps{
 			script{
@@ -63,6 +64,7 @@ pipeline {
 				catch (e){
 						Println(e);
 				}
+				//定义一个异常捕捉，ant可能会出现异常状态导致编译失败，因此使用try{}catch(){}来进行捕获异常并打印异常。
 			}
 		}
 	}
@@ -81,9 +83,10 @@ pipeline {
 				npmHome = tool "NPM"
 				sh "export PATH=\$PATH:${npmHome}/bin && ${npmHome}/bin/npm ${npmParams}";
 				sh "${npmHome}/bin/node -v";
-				//默认会失败并提示"/usr/bin/env: node: No such file or directory"需要确保在build的主机上已经通过
-				//npm install -g npm进行全局安装npm.且在当前没有办法获取到PATH的环境变量，
-				//因此将PATH环境变量添加npm命令行的环境变量"export PATH=\$PATH:${npmHome}/bin "
+				/*默认会失败并提示"/usr/bin/env: node: No such file or directory"需要确保在build的主机上已经通过
+				npm install -g npm进行全局安装npm.且在当前没有办法获取到PATH的环境变量，
+				因此将PATH环境变量添加npm命令行的环境变量"export PATH=\$PATH:${npmHome}/bin "
+				*/
 			}
 		}
 	}
@@ -137,8 +140,10 @@ pipeline {
                 //代码扫描
                 stage("CodeScan"){
                     steps{
-                        //无法直接在steps当中使用sh命令。
-                        //sh 'mvn --version'
+                        /*
+						无法直接在steps当中使用sh命令。
+                        sh 'mvn --version'
+						*/
                         timeout(time:30, unit:"MINUTES"){
                             script{
                                 print("代码扫描")
