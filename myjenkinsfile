@@ -4,7 +4,8 @@
 
 def tools = new org.devops.tools();
 //tools工具获取方法的相对路径是在当前src目录下的org/devops/下的tools.groovy文件. 
-def build = new org.devops.build();
+//def build = new org.devops.build();
+def build = new build();
 //将当前目录下/src/org/devops/build.groovy文件进行实例化引用.
 
 String buildType = "${env.buildType}";
