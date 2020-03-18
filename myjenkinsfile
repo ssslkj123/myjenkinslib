@@ -1,6 +1,6 @@
 #!groovy
 
-@Library('myjenkinslib') _
+@Library('myjenkinslib'@master) _ //该行表示引入了名称为"myjenkinslib"的共享库，且版本分支为master版本分支,即"引用了自己"。
 
 def tools = new org.devops.tools()
 //tools工具获取方法的相对路径是在当前src目录下的org/devops/下的tools.groovy文件. 
