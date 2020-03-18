@@ -1,9 +1,14 @@
 #!groovy
 
-@Library('myjenkinslib'@master) _ //该行表示引入了名称为"myjenkinslib"的共享库，且版本分支为master版本分支,即"引用了自己"。
+@Library('myjenkinslib@master') _ //该行表示引入了名称为"myjenkinslib"的共享库，且版本分支为master版本分支,即"引用了自己"。
 
-def tools = new org.devops.tools()
+def tools = new org.devops.tools();
 //tools工具获取方法的相对路径是在当前src目录下的org/devops/下的tools.groovy文件. 
+def build = new org.devops.build();
+//将当前目录下/src/org/devops/build.groovy文件进行实例化引用.
+
+String buildType = "${env.buildType}";
+String buildShell = "${env.buildShell}";  //从环境变量读取用于传入 build 实例化对象的两个参数
 
 String workspace = "/opt/jenkins/workspace"
 String mvnParams = "${env.mvnParams}"  //通过env的方式获取参数并引用 mvnParams 来自于 当前pipeline 的参数化构建选项。 
@@ -31,48 +36,57 @@ pipeline {
     }
 
     stages {
-		//用于校验当前阶段的各种构建工具版本示例
-		stage("Maven_version_show"){
-			steps{
-				// sh "mvn -v"
-				sh "mvn ${mvnParams}";
+	//用于校验当前阶段的各种构建工具版本示例
+	stage("Maven_version_show"){
+		steps{
+			// sh "mvn -v"
+			sh "mvn ${mvnParams}";
+		}
+	}
+	   
+	stage("Build"){
+		steps{
+			script{
+			build.Build(buildType,buildShell);
+			//引用全局已经实例化过的build 并调用Build方法，传入参数来自于全局env.buildType与build.Shell.
 			}
 		}
-		
-		stage("Ant_version_show"){
-			steps{
-				script{
-					try{
-						antHome = tool "ANT";
-						sh "$antHome/bin/ant ${antParams}";
-					}
-					catch (e){
-							Println(e);
-					}
+	}
+	   
+	stage("Ant_version_show"){
+		steps{
+			script{
+				try{
+					antHome = tool "ANT";
+					sh "$antHome/bin/ant ${antParams}";
+				}
+				catch (e){
+						Println(e);
 				}
 			}
 		}
-		
-		stage("Gradle_version_show"){
-			steps{
-				script{
-					gradleHome = tool "GRADLE"
-					sh "${gradleHome}/bin/gradle -v";
-				}
+	}
+	
+	stage("Gradle_version_show"){
+		steps{
+			script{
+				gradleHome = tool "GRADLE"
+				sh "${gradleHome}/bin/gradle -v";
 			}
 		}
-		stage("Npm_version_show"){
-			steps{
-				script{
-					npmHome = tool "NPM"
-					sh "export PATH=\$PATH:${npmHome}/bin && ${npmHome}/bin/npm ${npmParams}";
-					sh "${npmHome}/bin/node -v";
-					//默认会失败并提示"/usr/bin/env: node: No such file or directory"需要确保在build的主机上已经通过
-					//npm install -g npm进行全局安装npm.且在当前没有办法获取到PATH的环境变量，
-					//因此将PATH环境变量添加npm命令行的环境变量"export PATH=\$PATH:${npmHome}/bin "
-				}
+	}
+	stage("Npm_version_show"){
+		steps{
+			script{
+				npmHome = tool "NPM"
+				sh "export PATH=\$PATH:${npmHome}/bin && ${npmHome}/bin/npm ${npmParams}";
+				sh "${npmHome}/bin/node -v";
+				//默认会失败并提示"/usr/bin/env: node: No such file or directory"需要确保在build的主机上已经通过
+				//npm install -g npm进行全局安装npm.且在当前没有办法获取到PATH的环境变量，
+				//因此将PATH环境变量添加npm命令行的环境变量"export PATH=\$PATH:${npmHome}/bin "
 			}
 		}
+	}
 
         //下载代码
         stage("GetCode"){ //阶段名称
