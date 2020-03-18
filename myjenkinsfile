@@ -65,6 +65,8 @@ pipeline {
 					npmHome = tool "NPM"
 					sh "${npmHome}/bin/npm ${npmParams}";
 					sh "${npmHome}/bin/node -v";
+					//默认会失败并提示"/usr/bin/env: node: No such file or directory"需要确保在build的主机上已经通过
+					//npm install -g npm进行全局安装npm.
 				}
 			}
 		}
