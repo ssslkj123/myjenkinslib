@@ -7,7 +7,7 @@ def tools = new org.devops.tools();
 //def build = new org.devops.build();
 def build = new org.devops.build();
 //将当前目录下/src/org/devops/build.groovy文件进行实例化引用.
-def deploySalt = new org.devops.deploySalt
+def deploySalt = new org.devops.deploySalt();
 //将当前目录下/src/org/devops/deploySalt.groovy文件进行实例化引用.
 
 
