@@ -5,8 +5,8 @@
 */
 //for saltstack
 
-def SaltDeploy(hosts,func){
+def SaltDeploy(salthosts,saltmod,saltparameters){
 //定义一个saltstack的的方法函数。
-  sh "salt \"\${hosts}\" \"\${func}\"  ";
+  sh "salt -L \"${hosts}\"    \${saltmod}   \"${saltparameters}\"  ";
 //注意$ 与"特殊符号的转义。
 }
