@@ -7,6 +7,6 @@
 
 def SaltDeploy(saltHosts,saltMod,saltParameters){
 //定义一个saltstack的的方法函数。
-  sh "salt -L \"${saltHosts}\"   \"${saltMod}\"   \"${saltParameters}\"  ";
+  sh "salt -L \"${saltHosts}\"   \"${saltMod}\"   ${saltParameters}  ";
 //注意$ 与"特殊符号的转义。
 }
