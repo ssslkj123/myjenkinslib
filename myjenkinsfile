@@ -7,9 +7,16 @@ def tools = new org.devops.tools();
 //def build = new org.devops.build();
 def build = new org.devops.build();
 //将当前目录下/src/org/devops/build.groovy文件进行实例化引用.
+def deploySalt = new org.devops.deploySalt
+//将当前目录下/src/org/devops/deploySalt.groovy文件进行实例化引用.
+
 
 String buildType = "${env.buildType}";
-String buildShell = "${env.buildShell}";  //从环境变量读取用于传入 build 实例化对象的两个参数
+String buildShell = "${env.buildShell}";  //从环境变量读取用于传入 build 实例化对象的两个参数.
+
+String saltHosts = "${env.saltHosts}"; //从环境变量读取用于传入到需要进行部署的主机参数.该参数是一个String列表 可以是hostA,hostB,hostC
+String saltMod = "${env.saltMod}"//从环境变量读取用于传入到需要进行部署的salt参数，如："test.ping"  "cmd.run".
+String saltParameters = "${env.saltParameters}" //传入的参数如cmd.run 模块需要传入的参数是"ls /" 可以为空"".
 
 String workspace = "/opt/jenkins/workspace"
 String mvnParams = "${env.mvnParams}"  //通过env的方式获取参数并引用 mvnParams 来自于 当前pipeline 的参数化构建选项。 
@@ -42,6 +49,22 @@ pipeline {
 			script{
 			build.Build(buildType,buildShell);
 			//引用全局已经实例化过的build 并调用Build方法，传入参数来自于全局env.buildType与build.Shell.
+				}
+			}
+		}
+	stage("Deploy_salt_hosts"){
+		steps{
+			script{
+			/*
+			String deployHosts = "hostA,hostB,hostC,hostD";
+			关于主机的信息不建议在全局参数配置当中定义，可以采用以下局部变量方式来定义：
+			hosts = saltHosts.split(",").toList();
+			*/
+				hosts = saltHosts.split(",").toList();
+				for (H in hosts){
+					deploySalt.SaltDeploy(H,saltMod,saltParameters);
+			//引用实例化过的deploySalt，调用当中的SaltDeploy方法读取传入的主机信息与参数信息.
+					}
 				}
 			}
 		}
