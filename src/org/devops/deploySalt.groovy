@@ -8,16 +8,16 @@
 def SaltDeploy(saltHosts,saltMod,saltParameters){
 //定义一个saltstack的的方法函数。
 
-  /*
+  
   if ( saltPrameters.isEmpty() )  
   //使用判断方法isEmpty() 来进行判断saltParameters是否为空值.
   {
     println("saltPrameters is empty");
     sh "salt -L \"${saltHosts}\"   \"${saltMod}\"  ";
   }
-  else
-  {*/
-  sh "salt -L \"${saltHosts}\"   \"${saltMod}\"   \"${saltParameters}\"  ";
+  //else
+  //{
+  //sh "salt -L \"${saltHosts}\"   \"${saltMod}\"   \"${saltParameters}\"  ";
   //注意$ 与"特殊符号的转义。
   //}
 }
