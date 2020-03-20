@@ -16,7 +16,7 @@ def SaltDeploy(saltHosts,saltMod,saltParameters){
   }
   else
   {
-  sh "salt -L \"${saltHosts}\"   \"${saltMod}\"   ${saltParameters}  ";
+  sh "salt -L \"${saltHosts}\"   \"${saltMod}\"   \"${saltParameters}\"  ";
   //注意$ 与"特殊符号的转义。
   }
 }
